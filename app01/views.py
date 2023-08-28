@@ -1,19 +1,25 @@
-import random
-import string
+from .utils import generate_verification_code
 
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.core.cache import cache
+
+
+def test(request):
+    cache.set('username', 'star')
+    return HttpResponse(cache.get('username'))
 
 
 def add(request):
     for i in range(3):
-        user = User.objects.create_user(username='user%s' % i, password='mmm')
-    user.is_active = False
-    user.save()
+        user = User.objects.create_user(username='useroo%s' % i, password='mmm')
+    # user.is_active = False
+    # user.save()
     return JsonResponse({
         'code': 200,
         'msg': '新增用户成功'
@@ -28,8 +34,11 @@ def register(request):
     email = request.POST.get('email')
     user = User.objects.filter(username=username).first()
     if not user:
-        User.objects.create_user(username=username, password=password, email=email)
-        return JsonResponse({'code':200, 'msg':'注册成功'})
+        if not User.objects.filter(email=email).first():
+            User.objects.create_user(username=username, password=password, email=email)
+            return JsonResponse({'code':200, 'msg':'注册成功'})
+        else:
+            return JsonResponse({'code': 403, 'msg': '该邮箱已注册'})
     else:
         return JsonResponse({
             'code': 403,
@@ -104,38 +113,81 @@ def change_password(request):
     user = User.objects.get(id=id)
     password = request.POST.get('password')
     new_password = request.POST.get('new_password')
-    if authenticate(username=user.username, password=password):
-        # user.password = new_password
-        user.set_password(new_password)
-        user.save()
-        return JsonResponse({
-            'code': 200,
-            'msg': '密码修改成功'
-        })
+    new_repeat_password = request.POST.get('new_repeat_password')
+    if new_repeat_password == new_password:
+        if authenticate(username=user.username, password=password):
+            # user.password = new_password
+            user.set_password(new_password)
+            user.save()
+            return JsonResponse({
+                'code': 200,
+                'msg': '密码修改成功'
+            })
 
+        else:
+            return JsonResponse({
+                'code': 403,
+                'msg': '原密码验证失败'
+            })
     else:
         return JsonResponse({
             'code': 403,
-            'msg': '原密码验证失败'
+            'msg': '两次输入的新密码不一致'
         })
-
-
-# 生成特定长度的验证码，包含数字和字母
-def generate_verification_code(length):
-    # 定义验证码中包含的字符类型
-    chars = string.ascii_letters + string.digits  # 包含大小写字母和数字
-    # 使用random.choices方法生成随机验证码
-    code = ''.join(random.choices(chars, k=length))
-    return code
 
 
 def reset_password(request):
     if request.method == 'GET':
-        captcha = generate_verification_code(6)
-        print(captcha)
         return render(request, 'reset_password.html')
-    # username = request.POST.get('username')
-    # email = request.POST.get('email')
-    # captcha = request.POST.get('captcha')
-    # password = request.POST.get('password')
+    else:
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        code = request.POST.get('code')
+        password = request.POST.get('password')
+        repeat_password = request.POST.get('repeat_password')
+        user = User.objects.filter(email=email).first()
+        if user.username == username:
+            if code == cache.get(email):
+                if password == repeat_password:
+                    user.set_password(password)
+                    return JsonResponse({'code': 200, 'msg': '密码重置成功'})
+                else:
+                    return JsonResponse({'code': 403, 'msg': '两次输入的密码不一致'})
+            else:
+                return JsonResponse({'code': 403, 'msg': '邮箱验证码不匹配'})
+        else:
+            return JsonResponse({'code': 403, 'msg': '用户名和邮箱不匹配'})
+
+
+
+def send_mail_(request):  # 默认为POST方法
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        user = User.objects.filter(email=email).first()
+        if user and user.username == username:
+            code = generate_verification_code(6)
+            cache.set(email, code)
+            try:
+                send_mail(
+                    '重置密码邮件',
+                    '这是重置密码所需要的验证码：%s' % code,
+                    'coastline_s@qq.com',
+                    [email],
+                    # fail_silently=True,  # 发送失败后是否静默，默认为False（也就是失败会报错）
+                )
+                print('code:', code)
+            except:
+                return JsonResponse({'code': 403, 'msg': '邮件发送失败，请检查邮箱地址'})
+            return JsonResponse({
+                'code': 200,
+                'msg': '邮件发送成功'
+            })
+        else:
+            return JsonResponse({
+                'code': 403,
+                'msg': '用户名和邮箱不匹配'
+            })
+
+
 

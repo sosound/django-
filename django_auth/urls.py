@@ -29,4 +29,6 @@ urlpatterns = [
     path('accounts/logout/', views.logout_),
     path('accounts/chpassword/', views.change_password),
     path('accounts/repassword/', views.reset_password),
+    path('accounts/send_mail/', views.send_mail_),
+    path('accounts/test/', views.test),
 ]

@@ -127,3 +127,23 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True  # 端口号587
+EMAIL_USE_SSL = False  # 端口号 465
+EMAIL_HOST_USER = 'coastline_s@qq.com'
+EMAIL_HOST_PASSWORD = 'wvmknljvwomuehdd'
+
+# 缓存配置 - redis存储：依赖 django-redis
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",  # 告诉Django使用redis为存储引擎,不再使用memcache
+        "LOCATION": "redis://127.0.0.1:6379/7",  # 连入指定数据库 这里连接的是7号数据库
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100}  # 最大连接数
+        }
+    }
+}
