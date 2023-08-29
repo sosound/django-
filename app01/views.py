@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.core.cache import cache
+from django.views import View
 
 
 def test(request):
@@ -44,6 +45,19 @@ def register(request):
             'code': 403,
             'msg': '该用户名已存在'
         })
+
+
+class Login(View):
+    def get(self, request):
+        return HttpResponse('GET method')
+
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if username == 'star' and password == 'uuu':
+            return HttpResponse('POST 验证通过')
+        else:
+            return HttpResponse('POST 验证未通过')
 
 
 def login(request):
@@ -157,7 +171,6 @@ def reset_password(request):
                 return JsonResponse({'code': 403, 'msg': '邮箱验证码不匹配'})
         else:
             return JsonResponse({'code': 403, 'msg': '用户名和邮箱不匹配'})
-
 
 
 def send_mail_(request):  # 默认为POST方法

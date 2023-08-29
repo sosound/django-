@@ -31,4 +31,5 @@ urlpatterns = [
     path('accounts/repassword/', views.reset_password),
     path('accounts/send_mail/', views.send_mail_),
     path('accounts/test/', views.test),
+    path('login/', views.Login.as_view()),
 ]
