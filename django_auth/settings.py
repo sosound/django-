@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'app01.middleware.Code200LoggingMiddleware'
+    'app01.middleware.CodeNot200LoggingMiddleware'
 ]
 
 ROOT_URLCONF = 'django_auth.urls'
@@ -170,9 +170,9 @@ LOGGING = {
             'filename': os.path.join(BASE_DIR, 'debug.log'),
             'formatter': 'standard'
         },
-        'file_200': {
+        'file_not200': {
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'code200.log'),
+            'filename': os.path.join(BASE_DIR, 'code_not200.log'),
             'formatter': 'standard'
         },
     },
@@ -185,8 +185,8 @@ LOGGING = {
             'handlers': ['file'],
             'level': 'DEBUG'
         },
-        'code200': {
-            'handlers': ['file_200'],
+        'code_not200': {
+            'handlers': ['file_not200'],
             'level': 'DEBUG'
         }
     },
