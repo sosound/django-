@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os.path
 
 from pathlib import Path
 
@@ -79,10 +80,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'database03',
-        'HOST': '127.0.0.1',
+        'HOST': '59.110.228.104',
         'PORT': 3306,
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'star',
+        'PASSWORD': 'star',
     }
 }
 
@@ -146,4 +147,20 @@ CACHES = {
             "CONNECTION_POOL_KWARGS": {"max_connections": 100}  # 最大连接数
         }
     }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+        },
+    },
+    'root': {
+        'handlers': ['file'],
+        'level': 'DEBUG'
+    },
 }

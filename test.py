@@ -11,3 +11,10 @@ if not c:
     print('a')
 else:
     print('b')
+
+
+def fu():
+    """
+
+    :return:
+    """

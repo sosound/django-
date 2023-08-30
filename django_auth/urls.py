@@ -21,15 +21,13 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/add/', views.add),
-    path('accounts/login/', views.login),
     path('accounts/query/', views.query),
     path('accounts/view/', views.view),
+    path('accounts/view1/', views.view1),
     path('accounts/register/', views.register),
     path('accounts/logout/', views.logout_),
     path('accounts/chpassword/', views.change_password),
     path('accounts/repassword/', views.reset_password),
     path('accounts/send_mail/', views.send_mail_),
-    path('accounts/test/', views.test),
-    path('login/', views.Login.as_view()),
+    path('accounts/login/', views.Login.as_view()),
 ]
