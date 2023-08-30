@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -152,15 +152,32 @@ CACHES = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'debug.log'),
+    'formatters': {
+        'standard': {
+            'format': '{asctime} {levelname} {message}',
+            'style': '{',
         },
     },
-    'root': {
-        'handlers': ['file'],
-        'level': 'DEBUG'
+    'handlers': {
+        'file_exception': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'exception.log'),
+            'formatter': 'standard',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            'formatter': 'standard'
+        },
+    },
+    'loggers': {
+        'django_exception': {
+            'handlers': ['file_exception'],
+            'level': 'DEBUG'
+        },
+        'debug_': {
+            'handlers': ['file'],
+            'level': 'DEBUG'
+        }
     },
 }
