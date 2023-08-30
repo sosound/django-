@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'app01.middleware.Code200LoggingMiddleware'
 ]
 
 ROOT_URLCONF = 'django_auth.urls'
@@ -169,6 +170,11 @@ LOGGING = {
             'filename': os.path.join(BASE_DIR, 'debug.log'),
             'formatter': 'standard'
         },
+        'file_200': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'code200.log'),
+            'formatter': 'standard'
+        },
     },
     'loggers': {
         'django_exception': {
@@ -178,6 +184,12 @@ LOGGING = {
         'debug_': {
             'handlers': ['file'],
             'level': 'DEBUG'
+        },
+        'code200': {
+            'handlers': ['file_200'],
+            'level': 'DEBUG'
         }
     },
 }
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 1021 * 1024 * 20  # 上传文件时最大缓存容量为20M，超出转硬盘存储。
