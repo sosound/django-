@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 
 from .utils import generate_verification_code
 
@@ -15,6 +16,7 @@ from django.core.cache import cache
 from django.views import View
 from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.cache import cache_page
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -93,6 +95,8 @@ def logout_(request):
     })
 
 
+@cache_page(60 * 5)  # tag8，缓存视图函数的输出结果5分钟
+@csrf_exempt
 @require_POST  # tag4，限制请求方式为POST
 def query(request, *args, **kwargs):  # tag2，接收多个过滤参数
     """
@@ -220,6 +224,27 @@ def send_mail_(request):  # 默认为POST方法
                 'code': 403,
                 'msg': '用户名和邮箱不匹配'
             })
+
+
+@csrf_exempt
+@require_POST
+def upload_file(request):
+    """
+        文件上传
+    :param request:
+    :return:
+    """
+    file = request.FILES['file']
+    if file:
+        filename = file.name
+        bas_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 获取项目根目录
+        file_path = os.path.join(bas_dir, 'upload_files', filename)  # 构建文件的完整路径
+        with open(file_path, 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+        return JsonResponse({'code': 200, 'msg': '文件上传成功'})
+    else:
+        return JsonResponse({'code': 403, 'msg': '未传入有效文件'})
 
 
 
