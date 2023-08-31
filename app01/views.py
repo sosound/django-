@@ -61,6 +61,7 @@ class Login(View):  #
     """
         以类视图的方式实现登录功能，接收from表单数据格式的POST请求。
     """
+
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -116,8 +117,72 @@ def query(request, *args, **kwargs):  # tag2，接收多个过滤参数
         query_dict['first_name'] = param2
     if param3:
         query_dict['last_name'] = param3
-    results = User.objects.filter(**query_dict).all().values('id')
-    return JsonResponse({'code': 200, 'msg': list(results)})
+    res1 = User.objects.filter(**query_dict).all().values('id')  # queryset对象。tag11，queryset数据类型的验证。
+    res11 = res1[:2]  # 切片操作
+
+    res2 = User.objects.filter(id=24)  # queryset对象，指向单个数据
+    res21 = User.objects.get(id=25)  # models.User对象
+
+    res3 = User.objects.all()  # queryset对象
+    res31 = res3.first()  # models.User对象
+    res32 = res3.order_by('first_name')  # queryset对象，链式调用
+    res321 = res32.values('username')  # queryset对象，链式调用
+
+    res4 = User.objects.all()[:3]  # queryset对象，切片
+
+    users = list(User.objects.all())  # 将 QuerySet 转换为列表
+    for user in users:  # 这里不会执行数据库查询
+        print(user.username)
+    for user in users:  # 这里也不会执行数据库查询
+        print(user.email)
+
+    res5 = User.objects.all()
+    list(res5)  # 执行查询（结果被缓存）
+    list(res5)  # 不执行查询，使用缓存结果
+
+    res6 = User.objects.all()
+    new_user = User(username='sss', password='uuu', email='iii')
+    res61 = list(res6)
+    res61.append(new_user)  # 执行list的append添加数据
+
+    return JsonResponse({'code': 200, 'msg': list(res1)})
+
+
+"""
+        
+    res1数据类型为：<class 'django.db.models.query.QuerySet'>
+    res1的值为：<QuerySet [{'id': 24}, {'id': 25}, {'id': 26}, {'id': 27}, {'id': 28}, {'id': 29}, {'id': 30}, {'id': 31}, {'id': 32}, {'id': 33}]>
+    
+    res11数据类型：<class 'django.db.models.query.QuerySet'>
+    res11值：<QuerySet [{'id': 24}, {'id': 25}]>
+    
+    res2数据类型：<class 'django.db.models.query.QuerySet'>
+    res2值：<QuerySet [<User: star>]>
+    
+    res21数据类型：<class 'django.contrib.auth.models.User'>
+    
+    res3数据类型：<class 'django.db.models.query.QuerySet'>
+    res31数据类型：<class 'django.contrib.auth.models.User'>
+    
+    res61值：[<User: star>, <User: star1>, <User: star2>, <User: star3>, <User: star4>, <User: star5>, <User: star6>, <User: star7>, <User: star8>, <User: star9>, <User: sss>]
+    
+    获取数据库查询（批量数据）的过程分为两步：
+    第一步：获取queryset类型数据，不消耗查询时间不占用内存。大数据量的复杂处理可以选择该步骤内处理。
+    第二步：将queryset类型的数据转换为实际数据（执行list(res1)、print(res1)等）。执行中耗费查询时间，执行后占用较大内存。
+    
+    利用queryset的特性在以下场景优势明显（相比输出具体数据后进行处理）：
+    1、需要执行切片的情况。避免了在python端对大量数据执行处理的性能损耗。
+    2、使用链式调用或条件查询等情况。在链式查询的不同阶段快速输出不同的结果。
+    3、重复调用查询结果的情况。初次queryset被执行的结果被缓存，提高后续调用结果的速度。
+    
+    适合将queryset数据转为list数据进行处理的情况：
+    1、需要对数据进行多次迭代。每次queryset迭代需要查询一次，转为list可以提高速度。
+    2、需要进行特定的列表操作。如append、insert、remove等。
+    
+    
+    
+    
+"""
 
 
 @login_required
@@ -245,6 +310,3 @@ def upload_file(request):
         return JsonResponse({'code': 200, 'msg': '文件上传成功'})
     else:
         return JsonResponse({'code': 403, 'msg': '未传入有效文件'})
-
-
-
