@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os.path
 
 from pathlib import Path
 
@@ -44,10 +45,11 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'app01.middleware.CodeNot200LoggingMiddleware'
 ]
 
 ROOT_URLCONF = 'django_auth.urls'
@@ -79,10 +81,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'database03',
-        'HOST': '127.0.0.1',
+        'HOST': '59.110.228.104',
         'PORT': 3306,
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'star',
+        'PASSWORD': 'star',
     }
 }
 
@@ -147,3 +149,47 @@ CACHES = {
         }
     }
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '{asctime} {levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file_exception': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'exception.log'),
+            'formatter': 'standard',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            'formatter': 'standard'
+        },
+        'file_not200': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'code_not200.log'),
+            'formatter': 'standard'
+        },
+    },
+    'loggers': {
+        'django_exception': {
+            'handlers': ['file_exception'],
+            'level': 'DEBUG'
+        },
+        'debug_': {
+            'handlers': ['file'],
+            'level': 'DEBUG'
+        },
+        'code_not200': {
+            'handlers': ['file_not200'],
+            'level': 'DEBUG'
+        }
+    },
+}
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 1021 * 1024 * 20  # 上传文件时最大缓存容量为20M，超出转硬盘存储。

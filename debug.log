@@ -1,31 +1,3 @@
-Watching for file changes with StatReloader
-{'clearputaoshu5': (501, b'Bad address syntax. http://service.mail.qq.com/cgi-bin/help?subtype=1&&id=20022&&no=1000730')}
-Traceback (most recent call last):
-  File "C:\Users\chenyongan\PycharmProjects\django_auth\app01\views.py", line 183, in send_mail_
-    send_mail(
-  File "C:\Users\chenyongan\code\venv\Lib\site-packages\django\core\mail\__init__.py", line 87, in send_mail
-    return mail.send()
-           ^^^^^^^^^^^
-  File "C:\Users\chenyongan\code\venv\Lib\site-packages\django\core\mail\message.py", line 298, in send
-    return self.get_connection(fail_silently).send_messages([self])
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chenyongan\code\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 134, in send_messages
-    sent = self._send(message)
-           ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\chenyongan\code\venv\Lib\site-packages\django\core\mail\backends\smtp.py", line 152, in _send
-    self.connection.sendmail(
-  File "C:\Users\chenyongan\AppData\Local\Programs\Python\Python311\Lib\smtplib.py", line 901, in sendmail
-    raise SMTPRecipientsRefused(senderrs)
-smtplib.SMTPRecipientsRefused: {'clearputaoshu5': (501, b'Bad address syntax. http://service.mail.qq.com/cgi-bin/help?subtype=1&&id=20022&&no=1000730')}
-C:\Users\chenyongan\PycharmProjects\django_auth\app01\views.py changed, reloading.
-Watching for file changes with StatReloader
-C:\Users\chenyongan\PycharmProjects\django_auth\app01\views.py changed, reloading.
-Watching for file changes with StatReloader
-C:\Users\chenyongan\PycharmProjects\django_auth\app01\views.py changed, reloading.
-Watching for file changes with StatReloader
-C:\Users\chenyongan\PycharmProjects\django_auth\app01\views.py changed, reloading.
-Watching for file changes with StatReloader
-Forbidden: /accounts/view1/
-C:\Users\chenyongan\PycharmProjects\django_auth\app01\views.py changed, reloading.
-Watching for file changes with StatReloader
-C:\Users\chenyongan\PycharmProjects\django_auth\django_auth\settings.py changed, reloading.
+
+2023-08-30 14:19:28,996 INFO register username:star92023-08-30 17:26:26,221 WARNING Content contains "200":{'/accounts/login/'}
+
