@@ -1,3 +1,4 @@
+
 *保留配置文件csrf防护的中间件，通过@csrf_exempt关闭csrf防护 (tag1)
 *数据库查询语句接收多个过滤参数（tag2）
 *后端接收json格式的数据（tag3）
@@ -7,4 +8,7 @@
 *使用日志 （tag7）
 *使用页面缓存（tag8）
 *上传大文件，设置缓存上限（tag9）
-*创建中间件，日志记录费200的请求（tag10，中间件目录：app01.middleware.py）
+*创建中间件，日志记录非200的请求（tag10，位置：app01.middleware.py）
+*在不同场景下利用queryset数据的特性（tag11）
+*django配置跨域（tag12，位置：settings.py）
+*使用环境变量，git忽略文件(tag13)
