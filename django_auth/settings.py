@@ -9,12 +9,14 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import os.path
+import os
 
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
@@ -89,8 +91,8 @@ DATABASES = {
         'NAME': 'database03',
         'HOST': '59.110.228.104',
         'PORT': 3306,
-        'USER': 'star',
-        'PASSWORD': 'star',
+        'USER': os.getenv('MYSQL_USERNAME'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
     }
 }
 
@@ -141,8 +143,8 @@ EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True  # 端口号587
 EMAIL_USE_SSL = False  # 端口号 465
-EMAIL_HOST_USER = 'coastline_s@qq.com'
-EMAIL_HOST_PASSWORD = 'wvmknljvwomuehdd'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 # 缓存配置 - redis存储：依赖 django-redis
 CACHES = {

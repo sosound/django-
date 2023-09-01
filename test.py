@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+
 a = None
 b = None
 if not a or b:
@@ -12,9 +15,7 @@ if not c:
 else:
     print('b')
 
+load_dotenv()
+name = os.getenv('ENV1')
+print(name)
 
-def fu():
-    """
-
-    :return:
-    """
