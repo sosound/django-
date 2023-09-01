@@ -25,6 +25,11 @@ logger = logging.getLogger('debug_')
 logger_exception = logging.getLogger('django_exception')
 
 
+@require_GET
+def cors_(request):
+    return HttpResponse('cors test')
+
+
 @require_POST
 @csrf_exempt  # tag1 关闭csrf防护
 def register(request):

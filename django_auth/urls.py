@@ -31,4 +31,5 @@ urlpatterns = [
     path('accounts/send_mail/', views.send_mail_),
     path('accounts/login/', views.Login.as_view()),
     path('upload_file/', views.upload_file),
+    path('cors/', views.cors_),
 ]
