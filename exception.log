@@ -16,3 +16,4 @@ Traceback (most recent call last):
   File "C:\Users\chenyongan\AppData\Local\Programs\Python\Python311\Lib\smtplib.py", line 901, in sendmail
     raise SMTPRecipientsRefused(senderrs)
 smtplib.SMTPRecipientsRefused: {'clearputaoshu5': (501, b'Bad address syntax. http://service.mail.qq.com/cgi-bin/help?subtype=1&&id=20022&&no=1000730')}
+11
