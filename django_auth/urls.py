@@ -32,4 +32,6 @@ urlpatterns = [
     path('accounts/login/', views.Login.as_view()),
     path('upload_file/', views.upload_file),
     path('cors/', views.cors_),
+    path('sync/', views.sync_view),
+    path('async/', views.async_view),
 ]

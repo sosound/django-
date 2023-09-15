@@ -1,8 +1,11 @@
+import asyncio
 import json
 import logging
 import os
+import time
 
 from .utils import generate_verification_code
+from .decorators import time_test, async_decorator
 
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
@@ -23,6 +26,20 @@ from rest_framework.response import Response
 
 logger = logging.getLogger('debug_')
 logger_exception = logging.getLogger('django_exception')
+
+
+@time_test
+def sync_view(request):
+    for i in range(3):
+        time.sleep(1)
+    return HttpResponse('Sync Done')
+
+
+@async_decorator
+async def async_view(request):
+    for i in range(3):
+        await asyncio.sleep(1)
+    return HttpResponse('Async Done')
 
 
 @require_GET
