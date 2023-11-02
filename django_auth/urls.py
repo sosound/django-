@@ -34,4 +34,6 @@ urlpatterns = [
     path('cors/', views.cors_),
     path('sync/', views.sync_view),
     path('async/', views.async_view),
+    path('login/', views.login_view, name='login'),
+    path('add/', views.add, name='add'),
 ]

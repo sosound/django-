@@ -4,9 +4,6 @@ import logging
 import os
 import time
 
-from .utils import generate_verification_code
-from .decorators import time_test, async_decorator
-
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
@@ -23,9 +20,46 @@ from django.views.decorators.cache import cache_page
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.db import connections, DEFAULT_DB_ALIAS
+from django.views.decorators.csrf import csrf_protect
+
+from .utils import generate_verification_code
+from .decorators import time_test, async_decorator
+from .models import UserModel
 
 logger = logging.getLogger('debug_')
 logger_exception = logging.getLogger('django_exception')
+
+
+def add(request):
+    # UserModel.objects.create(username='ss', password='uu', nickname='star', nickname1='sssss')
+
+    def get_current_database():
+        connection = connections[DEFAULT_DB_ALIAS]
+        database_name = connection.settings_dict['NAME']
+        database_engine = connection.settings_dict['ENGINE']
+        return database_name, database_engine
+
+    # 调用函数获取当前数据库信息
+    db_name, db_engine = get_current_database()
+    print(f"当前应用程序使用的数据库：{db_name}，数据库引擎：{db_engine}")
+    return HttpResponse('add success')
+
+
+@csrf_protect
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # 在这里处理登录逻辑，例如验证用户名和密码
+
+        # 示例代码，简单判断用户名和密码是否正确
+        if username == 'admin' and password == 'sss':
+            return 'login success'
+        else:
+            return 'login failure'
+
+    return render(request, 'login.html')
 
 
 @time_test
