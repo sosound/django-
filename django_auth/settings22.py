@@ -170,17 +170,17 @@ LOGGING = {
     'handlers': {
         'file_exception': {
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'exception.log'),
+            'filename': os.path.join(BASE_DIR, 'logs/exception.log'),
             'formatter': 'standard',
         },
         'file': {
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
             'formatter': 'standard'
         },
         'file_not200': {
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'code_not200.log'),
+            'filename': os.path.join(BASE_DIR, 'logs/code_not200.log'),
             'formatter': 'standard'
         },
     },

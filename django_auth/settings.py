@@ -85,16 +85,16 @@ CORS_ALLOWED_ORIGINS = [
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'database01',
-        'HOST': '127.0.0.1',
-        'PORT': 3306,
-        'USER': os.getenv('MYSQL_USERNAME'),
-        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'database01',
+#         'HOST': '127.0.0.1',
+#         'PORT': 3306,
+#         'USER': os.getenv('MYSQL_USERNAME'),
+#         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+#     }
+# }
 
 
 # Password validation
@@ -170,17 +170,17 @@ LOGGING = {
     'handlers': {
         'file_exception': {
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'exception.log'),
+            'filename': os.path.join(BASE_DIR, 'logs/exception.log'),
             'formatter': 'standard',
         },
         'file': {
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'debug.log'),
+            'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
             'formatter': 'standard'
         },
         'file_not200': {
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'code_not200.log'),
+            'filename': os.path.join(BASE_DIR, 'logs/code_not200.log'),
             'formatter': 'standard'
         },
     },

@@ -12,3 +12,7 @@
 *在不同场景下利用queryset数据的特性（tag11）
 *django配置跨域（tag12，位置：settings.py）
 *使用环境变量，git忽略文件(tag13)
+
+待完成
+*django的异步进程
+
