@@ -25,17 +25,18 @@ load_dotenv()  # tag13
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-)2^cu3znzrl5)$gf)9#jxct&0hp+$o!rb6%(%6gr4k*(27v3mv'
 
-# SSL证书和私钥文件的路径
-SSL_CERTIFICATE = os.path.join(BASE_DIR, 'certs', 'galaxystream_online_ssl.crt')
-SSL_PRIVATE_KEY = os.path.join(BASE_DIR, 'certs', 'galaxystream_online_ssl.key')
+# # SSL证书和私钥文件的路径
+# SSL_CERTIFICATE = os.path.join(BASE_DIR, 'certs', 'galaxystream_online_ssl.crt')
+# SSL_PRIVATE_KEY = os.path.join(BASE_DIR, 'certs', 'galaxystream_online_ssl.key')
 
 # 配置HTTPS安全参数
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 # 服务器配置
-SERVER_NAME = 'your_domain.com'
+SERVER_NAME = 'galaxystream.online'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
