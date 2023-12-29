@@ -30,8 +30,8 @@ SECRET_KEY = 'django-insecure-)2^cu3znzrl5)$gf)9#jxct&0hp+$o!rb6%(%6gr4k*(27v3mv
 # SSL_PRIVATE_KEY = os.path.join(BASE_DIR, 'certs', 'galaxystream_online_ssl.key')
 
 # 配置HTTPS安全参数
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
 
@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app01',
     'corsheaders',
-    'sslserver'
 ]
 
 MIDDLEWARE = [
