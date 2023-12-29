@@ -31,6 +31,10 @@ logger = logging.getLogger('debug_')
 logger_exception = logging.getLogger('django_exception')
 
 
+def beian(request):
+    return render(request, 'beian.html')
+
+
 def add(request):
     # UserModel.objects.create(username='ss', password='uu', nickname='star', nickname1='sssss')
 
@@ -366,3 +370,13 @@ def upload_file(request):
         return JsonResponse({'code': 200, 'msg': '文件上传成功'})
     else:
         return JsonResponse({'code': 403, 'msg': '未传入有效文件'})
+
+
+def show(request):
+    result = {
+        'code': 0,
+        'message': 'success',
+        'data': []
+    }
+    return render(request, 'show.html')
+    # return JsonResponse(result)
