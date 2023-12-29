@@ -37,5 +37,5 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('add/', views.add, name='add'),
     path('show/', views.show, name='show'),
-    path('/', views.beian, name='beian'),
+    path('', views.beian, name='beian'),
 ]
