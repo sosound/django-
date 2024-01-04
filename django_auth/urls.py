@@ -18,6 +18,8 @@ from app01 import views
 
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,3 +41,5 @@ urlpatterns = [
     path('show/', views.show, name='show'),
     path('', views.beian, name='beian'),
 ]
+
+urlpatterns += static(settings.STATIC_URL)  # tag14

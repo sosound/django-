@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app01',
-    'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +74,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'django_auth.wsgi.application'
 
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
@@ -118,6 +117,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+
+ASGI_APPLICATION = 'django_auth.asgi:application'
 
 LANGUAGE_CODE = 'en-us'
 
